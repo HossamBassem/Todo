@@ -54,7 +54,7 @@
             app:layout_constraintTop_toBottomOf="@+id/title"
             tools:text="android is here !" />
 
-        <ImageView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/mark_as_done"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
@@ -62,12 +62,14 @@
 
             android:paddingHorizontal="24dp"
             android:paddingVertical="8dp"
-            android:src="@drawable/ic_done"
-            android:adjustViewBounds="true"
+            app:icon="@drawable/ic_done"
+
+
 
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
         
         
