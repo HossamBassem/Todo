@@ -2,6 +2,7 @@ package com.route.todo.DataBase.Dao
 
 import androidx.room.*
 import com.route.todo.DataBase.Model.Todo
+import java.util.*
 
 @Dao
 interface TodoDao {
@@ -13,4 +14,6 @@ interface TodoDao {
     fun deleteTodo(todo: Todo)
 @Query("select * from Todo")
     fun getAllTodo():List<Todo>
+@Query("select * from Todo where date=:date")
+    fun getTodosByDate(date: Date):List<Todo>
 }

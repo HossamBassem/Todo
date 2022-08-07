@@ -23,13 +23,15 @@ lateinit var discTv: EditText
 lateinit var dateTv: TextView
 lateinit var discLayout: TextInputLayout
 lateinit var titleLayout: TextInputLayout
-class addTodoBottomSheet:BottomSheetDialogFragment() {
+var onTodoAddedListener: AddTodoBottomSheet.OnTodoAddedListener?=null
+class AddTodoBottomSheet:BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.addtodobottomsheet, container, false)
+        context
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,23 +41,30 @@ class addTodoBottomSheet:BottomSheetDialogFragment() {
     }
 
     private fun viewsListener() {
+        dateTv.setOnClickListener {
+            showDatePicker()
+        }
+        showDate()
+
         finishBtn.setOnClickListener {
             val title = titleTv.text.toString()
             val disc = discTv.text.toString()
             if (validate(title, disc)) {
                 //
-              var todo=Todo(name = title, detail = disc, date = Date(calender.timeInMillis), isDone = false)
+              var todo=Todo(name = title, detail = disc, date = calender.clearTime().time, isDone = false)
                 MyDataBase.getInstance(requireContext().applicationContext)
                     .todoDao()
                     .addTodo(todo)
+                onTodoAddedListener?.onTodoAdded()
+
                 dismiss()
             }
-            dateTv.setOnClickListener {
-                showDatePicker()
-            }
-            showDate()
 
         }
+    }
+    var onTodoAddedListener:OnTodoAddedListener?=null
+    interface OnTodoAddedListener{
+        fun onTodoAdded()
     }
 
         fun showDate() {
